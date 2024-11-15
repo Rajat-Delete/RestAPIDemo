@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/employees")
@@ -18,15 +19,6 @@ public class EmployeeController {
         this.employeeService = employeeService;
     }
 
-//    @GetMapping("/userDetails/{employeeId}")
-//    public EmployeeDTO getEmployeeDetails(@PathVariable (value = "employeeId") Long employeeId){
-//        return new EmployeeDTO(employeeId, "Rajat Sharma", LocalDate.of(2019,11,18),false);
-//    }
-
-    @GetMapping
-    public String getEmployeeData(@PathParam("sortBy") String sortBy){
-        return "Hey we are sorting by "+ sortBy;
-    }
 
     @GetMapping("/{employeeId}")
     public ResponseEntity<EmployeeDTO> getEmployeeById(@PathVariable(name = "employeeId") Long employeeId){
@@ -36,5 +28,16 @@ public class EmployeeController {
     @PostMapping
     public ResponseEntity<EmployeeDTO> createNewEmployee(@RequestBody EmployeeDTO employeeDTO){
         return ResponseEntity.ok(employeeService.createEmployeeDetails(employeeDTO));
+    }
+
+    @GetMapping()
+    public ResponseEntity<List<EmployeeDTO>> getAllEmployee(){
+        return ResponseEntity.ok().body(employeeService.getAllEmployees());
+    }
+
+    @DeleteMapping("/{employeeId}")
+    public ResponseEntity deleteEmployeeById(@PathVariable(value = "employeeId") Long employeeId){
+        employeeService.deleteEmployeeById(employeeId);
+        return ResponseEntity.ok("");
     }
 }

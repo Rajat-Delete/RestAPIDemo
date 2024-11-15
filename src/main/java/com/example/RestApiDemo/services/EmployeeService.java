@@ -7,6 +7,9 @@ import com.example.RestApiDemo.repositories.EmployeeRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class EmployeeService {
 
@@ -26,5 +29,15 @@ public class EmployeeService {
     public EmployeeDTO createEmployeeDetails(EmployeeDTO employeeDTO){
         EmployeeEntity employeeEntity = modelMapper.map(employeeDTO, EmployeeEntity.class);
         return modelMapper.map(employeeRepository.save(employeeEntity), EmployeeDTO.class);
+    }
+
+    public List<EmployeeDTO> getAllEmployees(){
+        List<EmployeeEntity> employeeList = employeeRepository.findAll();
+        return employeeList.stream().map(employeeEntity -> modelMapper.map(employeeEntity, EmployeeDTO.class)).collect(Collectors.toList());
+    }
+
+
+    public void deleteEmployeeById(long Id){
+        employeeRepository.deleteById(Id);
     }
 }
