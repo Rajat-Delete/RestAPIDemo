@@ -1,5 +1,6 @@
 package com.example.RestApiDemo.controllers;
 
+import com.example.RestApiDemo.aspects.TimeMonitor;
 import com.example.RestApiDemo.dto.EmployeeDTO;
 import com.example.RestApiDemo.services.EmployeeService;
 import jakarta.websocket.server.PathParam;
@@ -22,7 +23,9 @@ public class EmployeeController {
 
     @GetMapping("/{employeeId}")
     public ResponseEntity<EmployeeDTO> getEmployeeById(@PathVariable(name = "employeeId") Long employeeId){
-        return ResponseEntity.ok(employeeService.getEmployeeById(employeeId));
+        EmployeeDTO employeeDTO = employeeService.getEmployeeById(employeeId);
+        System.out.println("code after "+employeeDTO);
+        return ResponseEntity.ok(employeeDTO);
     }
 
     @PostMapping

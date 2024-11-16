@@ -23,7 +23,9 @@ public class EmployeeService {
 
     @TimeMonitor
     public EmployeeDTO getEmployeeById(Long Id){
+        System.out.println("code here");
           EmployeeEntity employeeEntity =  employeeRepository.getReferenceById(Id);
+        System.out.println("flow here");
           return modelMapper.map(employeeEntity,EmployeeDTO.class);
     }
 
