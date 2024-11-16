@@ -1,6 +1,6 @@
 package com.example.RestApiDemo.services;
 
-import com.example.RestApiDemo.controllers.EmployeeController;
+import com.example.RestApiDemo.aspects.TimeMonitor;
 import com.example.RestApiDemo.dto.EmployeeDTO;
 import com.example.RestApiDemo.entities.EmployeeEntity;
 import com.example.RestApiDemo.repositories.EmployeeRepository;
@@ -21,6 +21,7 @@ public class EmployeeService {
         this.modelMapper = modelMapper;
     }
 
+    @TimeMonitor
     public EmployeeDTO getEmployeeById(Long Id){
           EmployeeEntity employeeEntity =  employeeRepository.getReferenceById(Id);
           return modelMapper.map(employeeEntity,EmployeeDTO.class);
